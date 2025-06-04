@@ -1,3 +1,6 @@
+# Image
+ostreecontainer --url %%GHCR_IMAGE_PATH%%
+
 # Installation method
 cmdline
 

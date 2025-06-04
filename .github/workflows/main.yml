@@ -72,9 +72,9 @@ jobs:
 
       - name: Update Kickstart file with dynamic GHCR image path
         run: |
-          sed -i "s|%%GHCR_IMAGE_PATH%%|${{ steps.image_path.outputs.ghcr_image_path }}|g" default.ks
+          sed -i "s|%%GHCR_IMAGE_PATH%%|${{ steps.image_path.outputs.ghcr_image_path }}|g" static/default.ks
           echo "Updated default.ks content:"
-          cat default.ks
+          cat static/default.ks
 
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v4
@@ -82,7 +82,7 @@ jobs:
       - name: Upload Kickstart artifact for GitHub Pages
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './default.ks'
+          path: './static/'
 
       - name: Deploy to GitHub Pages
         id: deployment
