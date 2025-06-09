@@ -1,0 +1,20 @@
+[Unit]
+Description=Update Linode DNS records with current IP
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=exec
+ExecStart=/usr/libexec/update-linode-dns.sh
+DynamicUser=yes
+LoadCredentialEncrypted=linode-dns-updater.token:linode-dns-updater.token
+LoadCredential=linode-dns-updater.domain_id:linode-dns-updater.domain_id
+LoadCredential=linode-dns-updater.a_record_id:linode-dns-updater.a_record_id
+LoadCredential=linode-dns-updater.aaaa_record_id:linode-dns-updater.aaaa_record_id
+NoNewPrivileges=true
+CapabilityBoundingSet=
+SystemCallFilter=@system-service
+SystemCallErrorNumber=EPERM
+
+[Install]
+WantedBy=multi-user.target

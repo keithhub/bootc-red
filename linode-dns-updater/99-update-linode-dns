@@ -1,0 +1,17 @@
+#!/bin/bash
+
+interface=$1
+action=$2
+
+# Only trigger on external interfaces going up
+case "$action" in
+    up|dhcp4-change|dhcp6-change)
+        # Skip loopback and internal interfaces
+        if [[ "$interface" =~ ^(lo|docker|br-|veth) ]]; then
+            exit 0
+        fi
+
+        # Trigger DNS update with delay to allow network stabilization
+        systemctl start update-linode-dns.service
+        ;;
+esac
