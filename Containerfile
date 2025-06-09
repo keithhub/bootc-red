@@ -20,3 +20,5 @@ COPY --chown=root:root --chmod=600 *.nmconnection \ /etc/NetworkManager/system-c
 COPY linode-dns-updater/update-linode-dns.sh /usr/libexec/
 COPY linode-dns-updater/update-linode-dns.service /usr/lib/systemd/system/
 COPY linode-dns-updater/99-update-linode-dns /usr/lib/NetworkManager/dispatcher.d/
+
+RUN bootc container lint
