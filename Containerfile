@@ -14,11 +14,12 @@ RUN dnf -y install \
     && dnf clean all \
     && echo "Packages installed successfully."
 
+# Copy NetworkManager connection profiles
+COPY network/etc /etc
+RUN chmod 600 /etc/NetworkManager/system-connections/*.nmconnection
+
 # Install Linode DNS updater
 COPY linode-dns-updater/usr /usr
-
-# Copy NetworkManager connection profiles
-COPY --chown=root:root --chmod=600 *.nmconnection \ /etc/NetworkManager/system-connections/
 
 # Set timezone
 RUN ln -s ../usr/share/zoneinfo/America/New_York /etc
