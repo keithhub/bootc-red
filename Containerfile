@@ -1,15 +1,16 @@
 FROM quay.io/fedora/fedora-bootc:42
 
 RUN dnf -y install \
-    firewalld \
-    podman \
-    dnsmasq \
     NetworkManager-config-server \
-    curl \
-    wget \
-    vim-minimal \
-    iputils \
     bind-utils \
+    curl \
+    dnsmasq \
+    firewalld \
+    iputils \
+    podman \
+    tmux \
+    vim-minimal \
+    wget \
     && dnf clean all \
     && echo "Packages installed successfully."
 
