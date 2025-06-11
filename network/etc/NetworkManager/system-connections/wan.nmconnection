@@ -3,6 +3,7 @@ id=wan
 uuid=18909e72-edec-4fce-88bc-957c3732d135
 type=ethernet
 interface-name=enp4s0
+zone=external
 
 [ethernet]
 

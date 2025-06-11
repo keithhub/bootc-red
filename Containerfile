@@ -26,6 +26,12 @@ RUN echo "d /var/lib/dnsmasq 0755 root dnsmasq - -" > /usr/lib/tmpfiles.d/dnsmas
 # Install Linode DNS updater
 COPY linode-dns-updater/usr /usr
 
+# Set up firewall
+RUN <<EOF
+set -euo pipefail
+firewall-offline-cmd --zone=external --add-service=dhcpv6-client
+EOF
+
 RUN rm -r /var/cache/* /var/log/*
 RUN rm -r /var/lib/dnf
 
