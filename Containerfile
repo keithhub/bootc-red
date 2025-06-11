@@ -3,6 +3,9 @@ FROM --platform=linux/amd64/v2 quay.io/almalinuxorg/almalinux-bootc:10.0
 # Set timezone
 RUN ln -sr /usr/share/zoneinfo/America/New_York /etc/localtime
 
+# Set default target
+RUN systemctl set-default multi-user.target
+
 # Install native packages
 RUN dnf -y install \
     NetworkManager-config-server \
