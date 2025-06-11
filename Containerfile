@@ -1,4 +1,4 @@
-FROM quay.io/almalinuxorg/almalinux-bootc:10-20250610-amd64_v2
+FROM --platform=linux/amd64/v2 quay.io/almalinuxorg/almalinux-bootc:10.0
 
 # Set timezone
 RUN ln -sr /usr/share/zoneinfo/America/New_York /etc/localtime
