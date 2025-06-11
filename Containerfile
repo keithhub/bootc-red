@@ -25,6 +25,7 @@ RUN echo "d /var/lib/dnsmasq 0755 root dnsmasq - -" > /usr/lib/tmpfiles.d/dnsmas
 
 # Install Linode DNS updater
 COPY linode-dns-updater/usr /usr
+RUN systemctl enable update-linode-dns.timer
 
 # Set up firewall
 RUN <<EOF

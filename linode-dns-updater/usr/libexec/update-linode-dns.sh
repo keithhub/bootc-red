@@ -8,9 +8,6 @@ DOMAIN_ID=$(systemd-creds cat linode-dns-updater.domain_id)
 A_RECORD_ID=$(systemd-creds cat linode-dns-updater.a_record_id)
 AAAA_RECORD_ID=$(systemd-creds cat linode-dns-updater.aaaa_record_id)
 
-# Sleep to debounce network changes
-sleep 15
-
 # Get current public IPv4 and IPv6
 IPV4=$(curl -s -4 https://ipv4.icanhazip.com/ || echo "")
 IPV6=$(curl -s -6 https://ipv6.icanhazip.com/ || echo "")

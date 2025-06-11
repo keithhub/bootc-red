@@ -12,6 +12,6 @@ case "$action" in
         fi
 
         # Trigger DNS update with delay to allow network stabilization
-        systemctl start update-linode-dns.service
+        systemctl try-restart update-linode-dns.timer
         ;;
 esac
