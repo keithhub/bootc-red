@@ -1,7 +1,7 @@
 FROM quay.io/almalinuxorg/almalinux-bootc:10-20250610-amd64_v2
 
 # Set timezone
-RUN ln -sr /usr/share/zoneinfo/America/New_York /etc
+RUN ln -sr /usr/share/zoneinfo/America/New_York /etc/localtime
 
 # Install native packages
 RUN dnf -y install \
