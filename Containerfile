@@ -44,6 +44,11 @@ COPY linode-dns-updater/usr /usr
 RUN systemctl enable update-linode-dns.timer
 
 
+# Set up Tang service
+COPY tang-server/usr /usr
+# TODO: Make it a bound image?
+
+
 # Clean up
 RUN rm -r /var/cache/* /var/log/*
 RUN rm -r /var/lib/dnf

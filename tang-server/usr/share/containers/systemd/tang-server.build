@@ -1,0 +1,7 @@
+[Unit]
+Description=Build Tang Server container
+
+[Build]
+ImageTag=localhost/tang-server
+SetWorkingDirectory=unit
+File=Containerfile-tang-server

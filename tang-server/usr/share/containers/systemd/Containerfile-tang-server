@@ -1,0 +1,9 @@
+FROM quay.io/almalinuxorg/9-minimal:latest
+
+RUN microdnf -y install tang \
+  && microdnf clean all \
+  && rm -rf /var/cache/libdnf5
+
+EXPOSE 9090
+
+CMD ["/usr/libexec/tangd", "-l", "/var/db/tang"]

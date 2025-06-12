@@ -1,0 +1,12 @@
+[Unit]
+Description=Tang Server
+
+[Container]
+Image=tang-server.build
+Volume=tang-server.volume:/var/db/tang:Z
+PublishPort=9100:9090
+# TODO: bound image?
+# GlobalArgs=--storage-opt=additionalimagestore=/usr/lib/bootc/storage
+
+[Install]
+WantedBy=default.target
