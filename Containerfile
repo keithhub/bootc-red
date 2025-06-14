@@ -36,6 +36,7 @@ RUN echo "d /var/lib/dnsmasq 0755 root dnsmasq - -" > /usr/lib/tmpfiles.d/dnsmas
 # Set up firewall
 RUN <<EOF
 set -euo pipefail
+
 firewall-offline-cmd --zone=external --add-service=dhcpv6-client
 EOF
 
@@ -45,11 +46,21 @@ RUN systemctl enable update-linode-dns.timer
 
 
 # Set up Tang service
-COPY tang-server/usr /usr
 # TODO: Make it a bound image?
+COPY tang-server/usr /usr
+RUN systemctl enable tang-server.socket
+RUN <<EOF
+set -euo pipefail
+firewall-offline-cmd --new-service=tang
+firewall-offline-cmd --service=tang --set-short="Tang Server"
+firewall-offline-cmd --service=tang --add-port="9100/tcp"
+firewall-offline-cmd --zone=dmz --add-service=tang
+firewall-offline-cmd --zone=nm-shared --add-service=tang
+EOF
 
 
 # Clean up
+RUN find /etc/firewalld -name '*.old' -delete
 RUN rm -r /var/cache/* /var/log/*
 RUN rm -r /var/lib/dnf
 
