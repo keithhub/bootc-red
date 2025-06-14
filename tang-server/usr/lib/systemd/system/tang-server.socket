@@ -1,8 +1,10 @@
 [Unit]
-Description=Tang Server proxy
+Description=Tang Server socket
+Documentation=man:tang(8)
 
 [Socket]
 ListenStream=9100
+Accept=yes
 
 [Install]
 WantedBy=sockets.target

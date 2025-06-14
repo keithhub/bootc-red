@@ -1,0 +1,16 @@
+[Unit]
+Description=Tang Server
+Requires=tang-server.socket
+After=tang-server.socket
+
+[Container]
+Image=tang-server.build
+Network=none
+Volume=tang-server.volume:/var/db/tang:Z
+
+[Service]
+Type=oneshot
+StandardInput=socket
+StandardOutput=socket
+StandardError=journal
+PodmanArgs=--interactive
