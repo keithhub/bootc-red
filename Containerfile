@@ -27,11 +27,11 @@ EORUN
 
 
 # Set default target
-RUN ln -sfr /usr/lib/systemd/system/multi-user.target /usr/lib/systemd/system/default.target
+RUN systemctl set-default multi-user.target
 
 # Allow auto-updates
-RUN ln -sr /usr/lib/systemd/system/bootc-fetch-apply-updates.timer /usr/lib/systemd/system/timers.target.wants/
-RUN ln -sr /usr/lib/systemd/system/podman-auto-update.timer /usr/lib/systemd/system/timers.target.wants/
+RUN systemctl enable bootc-fetch-apply-updates.timer
+RUN systemctl enable podman-auto-update.timer
 
 
 # Copy NetworkManager connection profiles
