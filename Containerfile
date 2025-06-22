@@ -4,11 +4,15 @@ FROM --platform=linux/amd64/v2 quay.io/almalinuxorg/almalinux-bootc:10.0
 RUN ln -sr /usr/share/zoneinfo/America/New_York /etc/localtime
 
 
-# Install native packages
-RUN dnf -y install \
+# Install common packages
+RUN <<EORUN
+dnf config-manager --set-enabled crb
+dnf install -y epel-release
+dnf install -y \
     NetworkManager-config-server \
     bind-utils \
     curl \
+    distrobox \
     dnsmasq \
     firewalld \
     iputils \
@@ -16,8 +20,10 @@ RUN dnf -y install \
     tmux \
     vim-minimal \
     wget \
-    && dnf clean all \
-    && echo "Packages installed successfully."
+    ;
+dnf clean all
+echo "Packages installed successfully."
+EORUN
 
 
 # Set default target
