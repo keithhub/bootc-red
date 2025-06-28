@@ -3,7 +3,7 @@ Description=Tang Server socket
 Documentation=man:tang(8)
 
 [Socket]
-ListenStream=7500
+ListenStream=7406
 Accept=yes
 
 [Install]

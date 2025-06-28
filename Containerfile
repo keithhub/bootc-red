@@ -59,7 +59,7 @@ RUN <<EOF
 set -euo pipefail
 firewall-offline-cmd --new-service=tang
 firewall-offline-cmd --service=tang --set-short="Tang Server"
-firewall-offline-cmd --service=tang --add-port="7500/tcp"
+firewall-offline-cmd --service=tang --add-port="7406/tcp"
 firewall-offline-cmd --zone=dmz --add-service=tang
 firewall-offline-cmd --zone=nm-shared --add-service=tang
 EOF
