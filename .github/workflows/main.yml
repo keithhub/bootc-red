@@ -52,6 +52,8 @@ jobs:
         with:
           context: .
           file: ./Containerfile
+          platforms: linux/amd64/v2
+          provenance: false
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           cache-from: type=gha

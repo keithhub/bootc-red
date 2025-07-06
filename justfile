@@ -1,5 +1,5 @@
 build:
-    podman build . -t localhost/red
+    podman build --platform linux/amd64/v2 . -t localhost/red
 
 make-iso:
     podman save localhost/red | sudo podman load
