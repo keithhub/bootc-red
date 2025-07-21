@@ -17,6 +17,7 @@ dnf install -y \
     firewalld \
     iputils \
     podman \
+    rsync \
     tmux \
     vim-minimal \
     wget \
