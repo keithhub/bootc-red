@@ -25,6 +25,9 @@ dnf clean all
 echo "Packages installed successfully."
 EORUN
 
+# Install VDO
+RUN dnf install -y vdo && dnf clean all
+
 
 # Set default target
 RUN systemctl set-default multi-user.target
