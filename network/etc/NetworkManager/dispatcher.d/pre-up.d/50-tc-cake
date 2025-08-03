@@ -1,0 +1,11 @@
+#!/bin/sh
+
+if [ "$1" = "enp4s0" ]; then
+  tc qdisc replace dev $1 root cake bandwidth 12mbit nat ack-filter docsis
+
+  ip link add name $1ifb type ifb
+  tc qdisc replace dev $1 handle ffff: ingress
+  tc qdisc replace dev $1ifb root cake bandwidth 420mbit besteffort nat docsis ingress
+  ip link set $1ifb up
+  tc filter add dev $1 parent ffff: matchall action mirred egress redirect dev $1ifb
+fi
