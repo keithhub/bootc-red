@@ -62,10 +62,12 @@ firewall-offline-cmd --zone dmz --add-source ipset:dmz
 firewall-offline-cmd --new-policy fwd_outbound
 firewall-offline-cmd --policy fwd_outbound --add-ingress-zone internal
 firewall-offline-cmd --policy fwd_outbound --add-egress-zone external
+firewall-offline-cmd --policy fwd_outbound --add-egress-zone dmz
 firewall-offline-cmd --policy fwd_outbound --set-target ACCEPT
 
 firewall-offline-cmd --new-policy fwd_inbound_ipv6
 firewall-offline-cmd --policy fwd_inbound_ipv6 --add-ingress-zone external
+firewall-offline-cmd --policy fwd_inbound_ipv6 --add-ingress-zone dmz
 firewall-offline-cmd --policy fwd_inbound_ipv6 --add-egress-zone internal
 firewall-offline-cmd --policy fwd_inbound_ipv6 --family ipv6 --set-target ACCEPT
 EOF
