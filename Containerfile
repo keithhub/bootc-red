@@ -48,6 +48,23 @@ RUN <<EOF
 set -euo pipefail
 
 firewall-offline-cmd --zone=external --add-service=dhcpv6-client
+
+firewall-offline-cmd --zone internal --add-protocol icmp
+firewall-offline-cmd --zone internal --add-protocol ipv6-icmp
+firewall-offline-cmd --zone internal --add-service dhcp
+firewall-offline-cmd --zone internal --add-service dns
+firewall-offline-cmd --zone internal --remove-service-from-zone cockpit
+firewall-offline-cmd --zone internal --remove-service-from-zone samba-client
+
+firewall-offline-cmd --new-policy fwd_outbound
+firewall-offline-cmd --policy fwd_outbound --add-ingress-zone internal
+firewall-offline-cmd --policy fwd_outbound --add-egress-zone external
+firewall-offline-cmd --policy fwd_outbound --set-target ACCEPT
+
+firewall-offline-cmd --new-policy fwd_inbound_ipv6
+firewall-offline-cmd --policy fwd_inbound_ipv6 --add-ingress-zone external
+firewall-offline-cmd --policy fwd_inbound_ipv6 --add-egress-zone internal
+firewall-offline-cmd --policy fwd_inbound_ipv6 --family ipv6 --set-target ACCEPT
 EOF
 
 # Install Linode DNS updater
@@ -65,7 +82,7 @@ firewall-offline-cmd --new-service=tang
 firewall-offline-cmd --service=tang --set-short="Tang Server"
 firewall-offline-cmd --service=tang --add-port="7406/tcp"
 firewall-offline-cmd --zone=dmz --add-service=tang
-firewall-offline-cmd --zone=nm-shared --add-service=tang
+firewall-offline-cmd --zone internal --add-service tang
 EOF
 
 

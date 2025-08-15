@@ -3,6 +3,7 @@ id=lan
 uuid=cc74cb94-2069-43c7-9375-66c791d179a9
 type=ethernet
 interface-name=enp5s0
+zone=internal
 
 [ethernet]
 
