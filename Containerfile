@@ -47,7 +47,7 @@ RUN echo "d /var/lib/dnsmasq 0755 root dnsmasq - -" > /usr/lib/tmpfiles.d/dnsmas
 RUN <<EOF
 set -euo pipefail
 
-firewall-offline-cmd --zone=external --add-service=dhcpv6-client
+firewall-offline-cmd --zone external --add-service dhcpv6-client
 
 firewall-offline-cmd --zone internal --add-protocol icmp
 firewall-offline-cmd --zone internal --add-protocol ipv6-icmp
@@ -78,10 +78,10 @@ COPY tang-server/usr /usr
 RUN systemctl enable tang-server.socket
 RUN <<EOF
 set -euo pipefail
-firewall-offline-cmd --new-service=tang
-firewall-offline-cmd --service=tang --set-short="Tang Server"
-firewall-offline-cmd --service=tang --add-port="7406/tcp"
-firewall-offline-cmd --zone=dmz --add-service=tang
+firewall-offline-cmd --new-service tang
+firewall-offline-cmd --service tang --set-short "Tang Server"
+firewall-offline-cmd --service tang --add-port "7406/tcp"
+firewall-offline-cmd --zone dmz --add-service tang
 firewall-offline-cmd --zone internal --add-service tang
 EOF
 
