@@ -56,6 +56,9 @@ firewall-offline-cmd --zone internal --add-service dns
 firewall-offline-cmd --zone internal --remove-service-from-zone cockpit
 firewall-offline-cmd --zone internal --remove-service-from-zone samba-client
 
+firewall-offline-cmd --new-ipset dmz --type hash:ip
+firewall-offline-cmd --zone dmz --add-source ipset:dmz
+
 firewall-offline-cmd --new-policy fwd_outbound
 firewall-offline-cmd --policy fwd_outbound --add-ingress-zone internal
 firewall-offline-cmd --policy fwd_outbound --add-egress-zone external
