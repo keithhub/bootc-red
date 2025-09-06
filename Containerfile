@@ -26,6 +26,13 @@ dnf install -y \
 echo "Packages installed successfully."
 EORUN
 
+
+# Install and enable Clevis
+RUN dnf install -y clevis-dracut clevis-luks clevis-systemd \
+    && kver=$(cd /usr/lib/modules && echo *) \
+    && dracut -vf /usr/lib/modules/$kver/initramfs.img $kver
+
+
 # Install VDO
 RUN dnf install -y vdo
 
