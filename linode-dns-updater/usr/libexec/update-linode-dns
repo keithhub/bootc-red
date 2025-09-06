@@ -5,8 +5,8 @@ set -euo pipefail
 # Load credentials from systemd
 LINODE_TOKEN=$(systemd-creds cat linode-dns-updater.token)
 DOMAIN_ID=$(systemd-creds cat linode-dns-updater.domain_id)
-A_RECORD_ID=$(systemd-creds cat linode-dns-updater.a_record_id)
-AAAA_RECORD_ID=$(systemd-creds cat linode-dns-updater.aaaa_record_id)
+A_RECORD_ID=$(systemd-creds cat linode-dns-updater.a_record_id 2>/dev/null || echo "")
+AAAA_RECORD_ID=$(systemd-creds cat linode-dns-updater.aaaa_record_id 2>/dev/null || echo "")
 
 # Get current public IPv4 and IPv6
 IPV4=$(curl -s -4 https://ipv4.icanhazip.com/ || echo "")
