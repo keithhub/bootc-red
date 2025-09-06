@@ -15,6 +15,7 @@ method=auto
 
 [ipv6]
 addr-gen-mode=default
+dhcp-pd-hint=::/56
 dns=2620:fe::11#dns11.quad9.net;2620:fe:fe::11#dns11.quad9.net;
 ignore-auto-dns=true
 method=auto
