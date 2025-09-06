@@ -1,0 +1,12 @@
+[connection]
+id=enp6s0
+uuid=1e2b81d9-83b9-41a8-8437-e80f6ef40a66
+type=ethernet
+controller=19d3f433-bd02-441f-a30f-4df4fe8f7d33
+interface-name=enp6s0
+port-type=bridge
+zone=drop
+
+[ethernet]
+
+[bridge-port]

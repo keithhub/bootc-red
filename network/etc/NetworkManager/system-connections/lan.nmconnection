@@ -1,11 +1,13 @@
 [connection]
 id=lan
-uuid=cc74cb94-2069-43c7-9375-66c791d179a9
-type=ethernet
-interface-name=enp5s0
+uuid=19d3f433-bd02-441f-a30f-4df4fe8f7d33
+type=bridge
+interface-name=br0
 zone=internal
 
 [ethernet]
+
+[bridge]
 
 [ipv4]
 address1=172.27.1.1/24

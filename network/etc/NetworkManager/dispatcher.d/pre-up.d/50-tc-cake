@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ "$1" = "enp4s0" ]; then
+if [ "$1" = "enp1s0" ]; then
   tc qdisc replace dev $1 root cake bandwidth 12mbit nat ack-filter docsis
 
   ip link add name $1ifb type ifb

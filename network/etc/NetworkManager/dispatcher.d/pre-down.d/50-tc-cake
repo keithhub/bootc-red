@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ "$1" = "enp4s0" ]; then
+if [ "$1" = "enp1s0" ]; then
   tc filter del dev $1 parent ffff:
   tc qdisc del dev $1 parent ffff:
   ip link del name $1ifb

@@ -1,0 +1,12 @@
+[connection]
+id=enp2s0
+uuid=d27c0416-2a73-4ec7-9c2d-9871b808be0e
+type=ethernet
+controller=19d3f433-bd02-441f-a30f-4df4fe8f7d33
+interface-name=enp2s0
+port-type=bridge
+zone=drop
+
+[ethernet]
+
+[bridge-port]
