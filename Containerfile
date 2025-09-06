@@ -5,9 +5,10 @@ RUN ln -sr /usr/share/zoneinfo/America/New_York /etc/localtime
 
 
 # Install common packages
+
 RUN <<EORUN
+dnf install -y dnf-plugins-core epel-release
 dnf config-manager --set-enabled crb
-dnf install -y epel-release
 dnf install -y \
     NetworkManager-config-server \
     bind-utils \
@@ -22,12 +23,11 @@ dnf install -y \
     vim-minimal \
     wget \
     ;
-dnf clean all
 echo "Packages installed successfully."
 EORUN
 
 # Install VDO
-RUN dnf install -y vdo && dnf clean all
+RUN dnf install -y vdo
 
 
 # Set default target
@@ -92,6 +92,7 @@ EOF
 
 
 # Clean up
+RUN dnf clean all
 RUN find /etc/firewalld -name '*.old' -delete
 RUN rm -r /var/cache/* /var/log/*
 RUN rm -r /var/lib/dnf
