@@ -1,4 +1,4 @@
-FROM quay.io/almalinuxorg/almalinux-bootc:10.0
+FROM quay.io/almalinuxorg/almalinux-bootc:10.1
 
 # Set timezone
 RUN ln -sr /usr/share/zoneinfo/America/New_York /etc/localtime
@@ -103,5 +103,6 @@ RUN dnf clean all
 RUN find /etc/firewalld -name '*.old' -delete
 RUN rm -r /var/cache/* /var/log/*
 RUN rm -r /var/lib/dnf
+RUN rm -r /var/lib/selinux/targeted/active
 
 RUN bootc container lint
