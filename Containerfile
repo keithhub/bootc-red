@@ -117,6 +117,7 @@ RUN dnf clean all
 RUN find /etc/firewalld -name '*.old' -delete
 RUN rm -r /var/cache/* /var/log/*
 RUN rm -r /var/lib/dnf
-RUN rm -r /var/lib/selinux/targeted/active
+RUN mv /var/lib/selinux/targeted/active/modules/* /etc/selinux/targeted/modules/ \
+    && find /var/lib/selinux -empty -delete
 
-RUN bootc container lint
+RUN bootc container lint --no-truncate
