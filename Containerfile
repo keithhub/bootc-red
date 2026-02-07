@@ -29,6 +29,7 @@ dnf install -y \
     firewalld \
     iputils \
     podman \
+    radvd \
     rsync \
     tmux \
     vim-minimal \
@@ -56,11 +57,12 @@ RUN systemctl set-default multi-user.target
 RUN systemctl enable bootc-fetch-apply-updates.timer
 RUN systemctl enable podman-auto-update.timer
 
-# Copy NetworkManager connection profiles
+# Set up NetworkManager and radvd
 
 COPY network/etc /etc
 RUN chmod 600 /etc/NetworkManager/system-connections/*.nmconnection
 RUN echo "d /var/lib/dnsmasq 0755 root dnsmasq - -" > /usr/lib/tmpfiles.d/dnsmasq.conf
+RUN systemctl enable radvd
 
 # Set up firewall
 
