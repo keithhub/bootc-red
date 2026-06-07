@@ -1,4 +1,4 @@
-FROM quay.io/almalinuxorg/almalinux-bootc:10.1
+FROM quay.io/almalinuxorg/almalinux-bootc:10.2
 
 # Set timezone
 
@@ -121,8 +121,8 @@ RUN rm -r /var/cache/* /var/log/*
 RUN rm -r /var/lib/dnf
 RUN mv /var/lib/selinux/targeted/active/modules/* /etc/selinux/targeted/modules/ \
     && find /var/lib/selinux -empty -delete
+RUN rmdir /run/radvd
 
+# Lint
 
-RUN touch /XXX-test-file-for-soft-update
-
-RUN bootc container lint --no-truncate
+RUN bootc container lint --fatal-warnings --no-truncate
