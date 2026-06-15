@@ -54,6 +54,12 @@ RUN systemctl set-default multi-user.target
 
 # Allow auto-updates
 
+COPY <<EOF /etc/systemd/system/bootc-fetch-apply-updates.timer.d/schedule.conf
+[Timer]
+OnUnitInactiveSec=
+OnCalendar=*-*-* 04:00:00
+RandomizedDelaySec=1h
+EOF
 RUN systemctl enable bootc-fetch-apply-updates.timer
 RUN systemctl enable podman-auto-update.timer
 
