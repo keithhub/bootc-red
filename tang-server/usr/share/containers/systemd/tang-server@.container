@@ -7,10 +7,10 @@ After=tang-server.socket
 Image=tang-server.build
 Network=none
 Volume=tang-server.volume:/var/db/tang:Z
+PodmanArgs=--interactive
 
 [Service]
 Type=oneshot
 StandardInput=socket
 StandardOutput=socket
 StandardError=journal
-PodmanArgs=--interactive

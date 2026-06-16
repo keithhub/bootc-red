@@ -1,4 +1,4 @@
-FROM quay.io/almalinuxorg/9-minimal:latest
+FROM quay.io/almalinuxorg/10-minimal:latest
 
 RUN microdnf -y install tang \
   && microdnf clean all \
