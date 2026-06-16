@@ -1,4 +1,6 @@
+# [[file:../../../../tang-server.org::*Volume][Volume:1]]
 [Unit]
 Description=Tang Server volume
 
 [Volume]
+# Volume:1 ends here

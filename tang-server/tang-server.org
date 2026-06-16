@@ -1,0 +1,81 @@
+#+PROPERTY: header-args :mkdirp yes
+#+PROPERTY: header-args+ :comments link
+
+* Image
+
+#+BEGIN_SRC dockerfile :tangle usr/share/containers/systemd/Containerfile-tang-server
+FROM quay.io/almalinuxorg/10-minimal:latest
+
+RUN microdnf -y install tang \
+  && microdnf clean all \
+  && rm -rf /var/cache/libdnf5
+
+CMD ["/usr/libexec/tangd", "/var/db/tang"]
+#+END_SRC
+
+#+BEGIN_SRC systemd :tangle usr/share/containers/systemd/tang-server.build
+[Unit]
+Description=Build Tang Server container
+
+[Build]
+ImageTag=localhost/tang-server
+SetWorkingDirectory=unit
+File=Containerfile-tang-server
+#+END_SRC
+
+
+* Volume
+
+#+BEGIN_SRC systemd :tangle usr/share/containers/systemd/tang-server.volume
+[Unit]
+Description=Tang Server volume
+
+[Volume]
+#+END_SRC
+
+* Container
+
+#+BEGIN_SRC systemd :tangle usr/share/containers/systemd/tang-server@.container
+[Unit]
+Description=Tang Server
+Requires=tang-server.socket
+After=tang-server.socket
+
+[Container]
+Image=tang-server.build
+Network=none
+Volume=tang-server.volume:/var/db/tang:Z
+PodmanArgs=--interactive
+
+[Service]
+Type=oneshot
+StandardInput=socket
+StandardOutput=socket
+StandardError=journal
+#+END_SRC
+
+#+BEGIN_SRC systemd :tangle usr/lib/systemd/system/tang-server@.service.d/10-fix-container-name.conf
+# systemd socket instance names are not valid Podman container
+# names. Although seemingly undocumented, the first part of the
+# instance is a sequence number, just strip off the rest and just use
+# that. We don't need long term unique, so the risk is low.
+
+[Service]
+ExecStart=
+ExecStart=/bin/sh -c '/usr/bin/podman run -i --name systemd-%p_$(echo "%i" | cut -d"-" -f1) --cidfile=%t/%N.cid --replace --rm --cgroups=split --network none -v systemd-tang-server:/var/db/tang:Z localhost/tang-server'
+#+END_SRC
+
+* Socket
+
+#+BEGIN_SRC systemd :tangle usr/lib/systemd/system/tang-server.socket
+[Unit]
+Description=Tang Server socket
+Documentation=man:tang(8)
+
+[Socket]
+ListenStream=7406
+Accept=yes
+
+[Install]
+WantedBy=sockets.target
+#+END_SRC

@@ -1,3 +1,4 @@
+# [[file:../../../../tang-server.org::*Image][Image:2]]
 [Unit]
 Description=Build Tang Server container
 
@@ -5,3 +6,4 @@ Description=Build Tang Server container
 ImageTag=localhost/tang-server
 SetWorkingDirectory=unit
 File=Containerfile-tang-server
+# Image:2 ends here
