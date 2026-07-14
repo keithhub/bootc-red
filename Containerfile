@@ -1,4 +1,4 @@
-FROM quay.io/almalinuxorg/almalinux-bootc:10.2
+FROM quay.io/almalinuxorg/almalinux-bootc:10.2@sha256:33814a1f825127077db02278ba058c7f29cdad1863e3b853ae597504d5e20e84
 
 # Set timezone
 

@@ -1,0 +1,36 @@
+name: Renovate
+
+on:
+  schedule:
+    # Run several times a day so digest-only base image updates are not delayed long
+    - cron: '17 */6 * * *'
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'renovate.json'
+      - '.github/workflows/renovate.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  renovate:
+    name: Renovate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+
+      - name: Self-hosted Renovate
+        uses: renovatebot/github-action@22e0a16091fc706b04affe6ae53d5e3358ac4023 # v46.1.19
+        with:
+          # Create a classic or fine-grained PAT with contents + pull-requests
+          # write, store it as repository secret RENOVATE_TOKEN, then this
+          # workflow can open update PRs.
+          token: ${{ secrets.RENOVATE_TOKEN }}
+        env:
+          LOG_LEVEL: info
+          RENOVATE_PLATFORM: github
+          RENOVATE_REPOSITORIES: ${{ github.repository }}
