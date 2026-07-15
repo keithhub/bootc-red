@@ -28,7 +28,7 @@
       "description": "Track digest-pinned container images referenced from justfile",
       "managerFilePatterns": ["/(^|/)justfile$/"],
       "matchStrings": [
-        "# renovate: datasource=(?<datasource>[a-z-]+?) depName=(?<depName>\\S+)\\s+[^\\n]*:(?<currentValue>[^@\\s\"]+)(?:@(?<currentDigest>sha256:[a-f0-9]+))?"
+        "# renovate: datasource=(?<datasource>[a-z-]+) depName=(?<depName>\\S+)\\s+.*?\"[^:@\\s]*:(?<currentValue>[^@\\s\"]+)(?:@(?<currentDigest>sha256:[a-f0-9]+))?\""
       ],
       "versioningTemplate": "docker"
     }
