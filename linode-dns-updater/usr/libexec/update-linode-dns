@@ -9,8 +9,18 @@ A_RECORD_ID=$(systemd-creds cat linode-dns-updater.a_record_id 2>/dev/null || ec
 AAAA_RECORD_ID=$(systemd-creds cat linode-dns-updater.aaaa_record_id 2>/dev/null || echo "")
 
 # Get current public IPv4 and IPv6
-IPV4=$(curl -s -4 https://ipv4.icanhazip.com/ || echo "")
-IPV6=$(curl -s -6 https://ipv6.icanhazip.com/ || echo "")
+IPV4=$(curl -fsS -4 https://ipv4.icanhazip.com/ 2>/dev/null || true)
+IPV6=$(curl -fsS -6 https://ipv6.icanhazip.com/ 2>/dev/null || true)
+
+# Validate the fetched values look like real addresses before touching DNS
+valid_ipv4() { [[ "$1" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; }
+valid_ipv6() { [[ "$1" =~ ^[0-9a-fA-F:]+$ ]] && [[ "$1" == *:* ]]; }
+if [[ -n "$IPV4" ]] && ! valid_ipv4 "$IPV4"; then
+    echo "Invalid IPv4 from icanhazip: '$IPV4' — skipping" >&2; IPV4=""
+fi
+if [[ -n "$IPV6" ]] && ! valid_ipv6 "$IPV6"; then
+    echo "Invalid IPv6 from icanhazip: '$IPV6' — skipping" >&2; IPV6=""
+fi
 
 API_BASE="https://api.linode.com/v4/domains/${DOMAIN_ID}/records"
 HEADERS="Authorization: Bearer ${LINODE_TOKEN}"
@@ -21,7 +31,7 @@ update_record() {
     local record_type=$3
 
     if [[ -n "$ip_address" ]]; then
-        curl -s -X PUT \
+        curl -fsS -X PUT \
             -H "Content-Type: application/json" \
             -H "$HEADERS" \
             -d "{\"target\": \"$ip_address\"}" \
