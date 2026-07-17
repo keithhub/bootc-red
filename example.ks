@@ -31,7 +31,7 @@ bootloader --location=mbr
 rootpw --lock
 
 # User
-user --name keith --groups=wheel --password="dummy"
+user --name keith --groups=wheel --password=dummy
 sshkey --username keith "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHXUzN2aSID7Zd5lARAw+mC4eORXOWjueVkhTNjd9R/J khubbard@kh8"
 
 # Reboot
