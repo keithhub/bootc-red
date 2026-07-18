@@ -23,23 +23,37 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
 
-      - name: Verify RENOVATE_TOKEN is set
+      - name: Verify GitHub App credentials are set
         env:
-          RENOVATE_TOKEN: ${{ secrets.RENOVATE_TOKEN }}
+          RENOVATE_APP_CLIENT_ID: ${{ secrets.RENOVATE_APP_CLIENT_ID }}
+          RENOVATE_APP_PRIVATE_KEY: ${{ secrets.RENOVATE_APP_PRIVATE_KEY }}
         run: |
-          if [ -z "$RENOVATE_TOKEN" ]; then
-            echo '::error::RENOVATE_TOKEN is empty. Create a PAT (or fine-grained token) with contents + pull-requests write and store it as repository secret RENOVATE_TOKEN.'
-            exit 1
+          missing=0
+          if [ -z "$RENOVATE_APP_CLIENT_ID" ]; then
+            echo '::error::RENOVATE_APP_CLIENT_ID is empty. Store the GitHub App Client ID as repository secret RENOVATE_APP_CLIENT_ID.'
+            missing=1
           fi
+          if [ -z "$RENOVATE_APP_PRIVATE_KEY" ]; then
+            echo '::error::RENOVATE_APP_PRIVATE_KEY is empty. Store the GitHub App private key (.pem) as repository secret RENOVATE_APP_PRIVATE_KEY.'
+            missing=1
+          fi
+          exit "$missing"
+
+      # Exchange the GitHub App credentials for a short-lived installation token.
+      # App tokens expire after ~1 hour, so mint one at the start of each run.
+      - name: Generate GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        with:
+          client-id: ${{ secrets.RENOVATE_APP_CLIENT_ID }}
+          private-key: ${{ secrets.RENOVATE_APP_PRIVATE_KEY }}
 
       - name: Self-hosted Renovate
         uses: renovatebot/github-action@22e0a16091fc706b04affe6ae53d5e3358ac4023 # v46.1.19
         with:
-          # Create a classic or fine-grained PAT with contents + pull-requests
-          # write, store it as repository secret RENOVATE_TOKEN, then this
-          # workflow can open update PRs.
-          token: ${{ secrets.RENOVATE_TOKEN }}
+          token: ${{ steps.app-token.outputs.token }}
         env:
           LOG_LEVEL: info
           RENOVATE_PLATFORM: github
           RENOVATE_REPOSITORIES: ${{ github.repository }}
+          RENOVATE_PLATFORM_COMMIT: enabled
