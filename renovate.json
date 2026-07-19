@@ -25,10 +25,13 @@
   "customManagers": [
     {
       "customType": "regex",
-      "description": "Track digest-pinned container images referenced from justfile",
-      "managerFilePatterns": ["/(^|/)justfile$/"],
+      "description": "Track digest-pinned container images in justfile and build.sh",
+      "managerFilePatterns": [
+        "/(^|/)justfile$/",
+        "/(^|/)build\\.sh$/"
+      ],
       "matchStrings": [
-        "# renovate: datasource=(?<datasource>[a-z-]+) depName=(?<depName>\\S+)\\s+.*?\"[^:@\\s]*:(?<currentValue>[^@\\s\"]+)(?:@(?<currentDigest>sha256:[a-f0-9]+))?\""
+        "# renovate: datasource=(?<datasource>[a-z-]+) depName=(?<depName>\\S+)\\s+.*?[\"'][^:@\\s\"']*:(?<currentValue>[^@\\s\"']+)(?:@(?<currentDigest>sha256:[a-f0-9]+))?[\"']"
       ],
       "versioningTemplate": "docker"
     }
