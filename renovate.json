@@ -31,7 +31,7 @@
         "/(^|/)build\\.sh$/"
       ],
       "matchStrings": [
-        "# renovate: datasource=(?<datasource>[a-z-]+) depName=(?<depName>\\S+)\\s+.*?[\"'][^:@\\s\"']*:(?<currentValue>[^@\\s\"']+)(?:@(?<currentDigest>sha256:[a-f0-9]+))?[\"']"
+        "# renovate: datasource=(?<datasource>[a-z-]+) depName=(?<depName>\\S+)\\s+.*?[\"'](?:\\$\\{[^:]+:-)?(?<packageName>[^:@\\s\"']+):(?<currentValue>[^@\\s\"'}]+)(?:@(?<currentDigest>sha256:[a-f0-9]+))?(?:\\})?[\"']"
       ],
       "versioningTemplate": "docker"
     }
