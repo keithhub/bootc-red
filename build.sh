@@ -5,7 +5,7 @@ set -euo pipefail
 cd "$(dirname "${BASH_SOURCE[0]}")"
 
 # renovate: datasource=docker depName=quay.io/almalinuxorg/almalinux-bootc
-BASE_IMAGE="${BASE_IMAGE:-quay.io/almalinuxorg/almalinux-bootc:10.2@sha256:d57edbed2565714b73e5bdd510b3aeb49aea28bd7c72d282f657cc506adb4df9}"
+BASE_IMAGE="${BASE_IMAGE:-quay.io/almalinuxorg/almalinux-bootc:10.2@sha256:0ae7069c2d9d9053f9bb7964ab4799c0ec1797ad5ebcb311643bb84865346f27}"
 IMAGE_NAME="${IMAGE_NAME:-localhost/red}"
 
 ctr=
