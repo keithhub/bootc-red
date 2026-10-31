@@ -1,5 +1,5 @@
 # [[file:../../../../tang-server.org::*Image][Image:1]]
-FROM quay.io/almalinuxorg/10-minimal:10.2@sha256:1c0191d9bcd9fe466dd00552bb05b632ae3923709d1aef974609c347decf7243
+FROM quay.io/almalinuxorg/10-minimal:10.2@sha256:8ba381e5f1fab2b0f9561007ea8211567a0ab0b43ae27c8946f2a79095d2a13f
 
 RUN microdnf -y install tang \
   && microdnf clean all \
