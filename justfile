@@ -1,5 +1,5 @@
 # renovate: datasource=docker depName=quay.io/centos-bootc/bootc-image-builder
-bootc_image_builder := "quay.io/centos-bootc/bootc-image-builder:latest@sha256:4d8a0d9d173a9f450ff42d70777e1e0a6681a68f5c0f5084b65222eceb1f4d05"
+bootc_image_builder := "quay.io/centos-bootc/bootc-image-builder:latest@sha256:dab86ee6b46dcade411b37f4e70b07d93b6a06da0dbfec6fe89247a220e0d9f8"
 
 build:
     ./build.sh
